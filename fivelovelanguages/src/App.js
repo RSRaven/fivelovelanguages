@@ -19,6 +19,8 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/quiz" element={<QuizPage />} />
               <Route path="/results" element={<ResultsPage />} />
+              {/* Add a catch-all route that redirects to home */}
+              <Route path="*" element={<HomePage />} />
             </Routes>
           </div>
         </Router>

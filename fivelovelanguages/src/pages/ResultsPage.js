@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LanguageContext } from '../contexts/LanguageContext';
 import { UserContext } from '../contexts/UserContext';
@@ -9,25 +9,39 @@ const ResultsPage = () => {
   const { t } = useContext(LanguageContext);
   const { results, resetQuiz } = useContext(UserContext);
   const navigate = useNavigate();
-  const redirectAttempted = useRef(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Redirect if no results available - using useRef to prevent multiple redirects
+  // Check for results on mount
   useEffect(() => {
-    if (!results && !redirectAttempted.current) {
-      redirectAttempted.current = true;
-      navigate('/quiz');
+    console.log("ResultsPage mounted with results:", results);
+
+    if (!results || results.length === 0) {
+      console.log("No results found, redirecting to home");
+      navigate('/', { replace: true });
+    } else {
+      setIsLoading(false);
     }
-  }, [results]); // Removed navigate from dependencies
+  }, [results, navigate]);
 
   const handleRetakeQuiz = () => {
+    console.log("Retaking quiz");
     resetQuiz();
-    navigate('/quiz');
+    navigate('/', { replace: true });
   };
 
-  if (!results) {
-    return <div>Loading...</div>;
+  // Show loading while checking for results
+  if (isLoading) {
+    return (
+      <div className="results-page">
+        <Menu />
+        <div className="results-container">
+          <div>Loading results...</div>
+        </div>
+      </div>
+    );
   }
 
+  // If we get here, we should have results
   return (
     <div className="results-page">
       <Menu />

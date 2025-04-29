@@ -46,7 +46,8 @@ const useLocalStorage = (key, initialValue) => {
     } catch (error) {
       console.error(error);
     }
-  }, [key]); // Only re-run if key changes, not initialValue or storedValue
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]); // Only re-run if key changes
 
   return [storedValue, setValue];
 };

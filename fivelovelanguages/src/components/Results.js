@@ -4,14 +4,18 @@ import { LanguageContext } from '../contexts/LanguageContext';
 const Results = ({ results }) => {
   const { t } = useContext(LanguageContext);
 
+  // Debug logging
+  console.log("Rendering Results component with:", results);
+
   // Ensure results exist
   if (!results || results.length === 0) {
+    console.log("No results available");
     return <div>No results available</div>;
   }
 
   // The primary love language is the one with the highest score
   const primaryLanguage = results[0];
-  const secondaryLanguage = results[1];
+  const secondaryLanguage = results.length > 1 ? results[1] : null;
 
   // Check if there's a tie for first place
   const hasTie = secondaryLanguage && primaryLanguage.score === secondaryLanguage.score;
@@ -69,7 +73,9 @@ const Results = ({ results }) => {
 
         <div className="score-chart">
           {results.map((result, index) => {
-            const percentage = Math.round((result.score / totalPoints) * 100);
+            const percentage = totalPoints > 0
+              ? Math.round((result.score / totalPoints) * 100)
+              : 0;
 
             return (
               <div className="score-item" key={index}>

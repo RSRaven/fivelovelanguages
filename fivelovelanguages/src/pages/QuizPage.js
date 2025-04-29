@@ -7,33 +7,39 @@ import Menu from '../components/Menu';
 
 const QuizPage = () => {
   const { t } = useContext(LanguageContext);
-  const { gender, setGender, answers, saveAnswer, calculateResults } = useContext(UserContext);
+  const { gender, answers, saveAnswer, calculateResults, quizInProgress, setQuizInProgress } = useContext(UserContext);
   const navigate = useNavigate();
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [showError, setShowError] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [showGenderSelector, setShowGenderSelector] = useState(true);
+  const [loading, setLoading] = useState(true);
+
+  // Redirect to home if not in quiz mode
+  useEffect(() => {
+    if (!quizInProgress) {
+      navigate('/');
+    }
+  }, [quizInProgress, navigate]);
 
   // Load questions based on gender
   useEffect(() => {
-    // Only load questions after gender is selected
-    if (showGenderSelector) return;
-
-    setLoading(true);
     const loadQuestions = async () => {
       try {
         // In a real implementation, you might fetch from an API
+        // For now, we'll import directly
         const questionsModule = await import('../data/questions');
+        console.log("Loaded questions module:", questionsModule);
 
         // Filter questions by gender
         const genderQuestions = questionsModule.default.filter(
           q => q.gender === gender || q.gender === 'both'
         );
+        console.log("Filtered questions for gender:", gender, genderQuestions);
 
         // Limit to 30 questions if there are more
         const selectedQuestions = genderQuestions.slice(0, 30);
+        console.log("Selected questions:", selectedQuestions);
 
         setQuestions(selectedQuestions);
         setLoading(false);
@@ -44,15 +50,7 @@ const QuizPage = () => {
     };
 
     loadQuestions();
-  }, [gender, showGenderSelector]); // Re-run when gender changes or gender selection is complete
-
-  const handleGenderChange = (e) => {
-    setGender(e.target.value);
-  };
-
-  const handleGenderConfirm = () => {
-    setShowGenderSelector(false);
-  };
+  }, [gender]); // Only re-run if gender changes
 
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
@@ -66,78 +64,72 @@ const QuizPage = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Check if all questions are answered
-    if (answers.length < questions.length) {
+    const unansweredCount = questions.length - answers.length;
+    console.log(`Unanswered questions: ${unansweredCount}`);
+
+    if (unansweredCount > 0) {
       setShowError(true);
       return;
     }
 
-    // Calculate and save results
-    calculateResults(questions);
+    try {
+      // Calculate and save results
+      console.log("Submitting quiz and calculating results");
+      const results = calculateResults(questions);
+      console.log("Calculation completed, results:", results);
 
-    // Navigate to results page
-    navigate('/results');
+      // Ensure the results are saved before navigating
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+      // Make sure quiz in progress is properly set to false
+      setQuizInProgress(false);
+
+      // Use explicit path with replace to avoid redirect issues
+      navigate('/results', { replace: true });
+
+      console.log("Navigation to results completed");
+    } catch (error) {
+      console.error("Error during submission:", error);
+    }
   };
 
   const getCurrentAnswer = () => {
-    const found = answers.find(a => a.questionId === questions[currentQuestion]?.id);
+    if (!questions[currentQuestion]) return null;
+
+    const found = answers.find(a => a.questionId === questions[currentQuestion].id);
     return found ? found.choice : null;
   };
 
   const handleAnswerSelect = (choice) => {
     if (questions[currentQuestion]) {
+      console.log(`Saving answer for question ${questions[currentQuestion].id}: option ${choice}`);
       saveAnswer(questions[currentQuestion].id, choice);
       setShowError(false);
     }
   };
 
-  // Show gender selection UI first
-  if (showGenderSelector) {
+  if (loading) {
     return (
       <div className="quiz-page">
         <Menu />
-        <div className="gender-selection-container">
-          <h3>{t('selectGender')}</h3>
-          <div className="gender-options">
-            <label className="gender-option">
-              <input
-                type="radio"
-                name="gender"
-                value="men"
-                checked={gender === 'men'}
-                onChange={handleGenderChange}
-              />
-              <span>{t('men')}</span>
-            </label>
-            <label className="gender-option">
-              <input
-                type="radio"
-                name="gender"
-                value="women"
-                checked={gender === 'women'}
-                onChange={handleGenderChange}
-              />
-              <span>{t('women')}</span>
-            </label>
-          </div>
-          <button
-            className="confirm-gender-btn"
-            onClick={handleGenderConfirm}
-          >
-            {t('confirmAndStart')}
-          </button>
+        <div className="quiz-container">
+          <div>Loading questions...</div>
         </div>
       </div>
     );
   }
 
-  if (loading) {
-    return <div>Loading questions...</div>;
-  }
-
   if (!questions.length) {
-    return <div>No questions available for this gender.</div>;
+    return (
+      <div className="quiz-page">
+        <Menu />
+        <div className="quiz-container">
+          <div>No questions available for this gender.</div>
+        </div>
+      </div>
+    );
   }
 
   return (
