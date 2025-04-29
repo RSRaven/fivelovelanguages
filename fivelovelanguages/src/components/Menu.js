@@ -6,12 +6,8 @@ import LanguageSelector from './LanguageSelector';
 import Login from './Login';
 
 const Menu = () => {
-  const { user, gender, setGender, logout } = useContext(UserContext);
+  const { user, logout } = useContext(UserContext);
   const { t } = useContext(LanguageContext);
-
-  const handleGenderChange = (e) => {
-    setGender(e.target.value);
-  };
 
   return (
     <div className="menu">
@@ -19,18 +15,6 @@ const Menu = () => {
         <Link to="/" className="home-link">
           {t('appTitle')}
         </Link>
-      </div>
-
-      <div className="menu-item gender-selector">
-        <label htmlFor="gender-select">{t('selectGender')}: </label>
-        <select
-          id="gender-select"
-          value={gender}
-          onChange={handleGenderChange}
-        >
-          <option value="men">{t('men')}</option>
-          <option value="women">{t('women')}</option>
-        </select>
       </div>
 
       <div className="menu-item">

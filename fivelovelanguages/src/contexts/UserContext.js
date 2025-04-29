@@ -8,6 +8,7 @@ export const UserProvider = ({ children }) => {
   const [gender, setGender] = useState('men'); // 'men' or 'women'
   const [answers, setAnswers] = useLocalStorage('answers', []);
   const [results, setResults] = useLocalStorage('results', null);
+  const [quizInProgress, setQuizInProgress] = useState(false);
 
   const login = (userData) => {
     setUser(userData);
@@ -58,12 +59,19 @@ export const UserProvider = ({ children }) => {
       .map(([category, score]) => ({ category, score }));
 
     setResults(sortedResults);
+    setQuizInProgress(false); // Quiz is complete
     return sortedResults;
+  };
+
+  const startQuiz = () => {
+    resetQuiz();
+    setQuizInProgress(true);
   };
 
   const resetQuiz = () => {
     setAnswers([]);
     setResults(null);
+    setQuizInProgress(false);
   };
 
   return (
@@ -72,11 +80,13 @@ export const UserProvider = ({ children }) => {
       gender,
       answers,
       results,
+      quizInProgress,
       login,
       logout,
       setGender,
       saveAnswer,
       calculateResults,
+      startQuiz,
       resetQuiz
     }}>
       {children}

@@ -11,6 +11,15 @@ const Results = ({ results }) => {
 
   // The primary love language is the one with the highest score
   const primaryLanguage = results[0];
+  const secondaryLanguage = results[1];
+
+  // Check if there's a tie for first place
+  const hasTie = secondaryLanguage && primaryLanguage.score === secondaryLanguage.score;
+
+  // Check if secondary is close to primary (e.g., within 2 points)
+  const isSecondaryClose = secondaryLanguage &&
+    (primaryLanguage.score - secondaryLanguage.score <= 2) &&
+    !hasTie;
 
   // Calculate the total points to get percentages
   const totalPoints = results.reduce((sum, item) => sum + item.score, 0);
@@ -19,13 +28,40 @@ const Results = ({ results }) => {
     <div className="results-container">
       <div className="primary-language">
         <h2>{t('primaryLanguage')}</h2>
-        <div className="primary-language-name">
-          {t(primaryLanguage.category)}
-        </div>
+
+        {hasTie ? (
+          <div className="tied-languages">
+            <div className="primary-language-name">
+              {t(primaryLanguage.category)} & {t(secondaryLanguage.category)}
+            </div>
+            <p className="result-explanation">
+              {t('tiedLanguagesExplanation')}
+            </p>
+          </div>
+        ) : (
+          <div className="primary-language-name">
+            {t(primaryLanguage.category)}
+          </div>
+        )}
+
+        {isSecondaryClose && (
+          <p className="secondary-language-note">
+            {t('secondaryLanguageNote')}
+          </p>
+        )}
+
         <div className="primary-language-description">
           <h3>{t('explanation')}</h3>
           <p>{t(`${primaryLanguage.category}Desc`)}</p>
+
+          {hasTie && (
+            <p className="mt-4">{t(`${secondaryLanguage.category}Desc`)}</p>
+          )}
         </div>
+
+        <p className="score-maximum-note">
+          {t('scoreMaximumNote')}
+        </p>
       </div>
 
       <div className="score-breakdown">

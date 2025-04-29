@@ -41,5 +41,20 @@ export const loveLanguageDescriptions = {
         en: 'You feel loved through physical affection. Hugs, thoughtful touches on the arm, holding hands, and other forms of affection speak volumes to you about being cared for.',
         uk: 'Ви відчуваєте любов через фізичну прихильність. Обійми, уважні дотики до руки, тримання за руки та інші форми прихильності говорять вам багато про турботу.'
       }
+    },
+    // Additional result-related descriptions
+    resultExplanations: {
+      tiedLanguages: {
+        en: 'You speak two languages! You scored equally in these two love languages, which means both forms of expressing love are equally important to you.',
+        uk: 'Ви говорите двома мовами! Ви набрали однакову кількість очок у цих двох мовах кохання, що означає, що обидві форми вираження кохання однаково важливі для вас.'
+      },
+      secondaryClose: {
+        en: 'Your second highest love language is close to your primary one, which means both forms of expressing love are important to you.',
+        uk: 'Ваша друга за кількістю очок мова близька до основної, це означає, що обидва види вираження кохання для вас є важливими.'
+      },
+      scoreMaximum: {
+        en: 'The highest possible score for a primary love language is twelve.',
+        uk: 'Найвищий рівень очок для основної мови кохання дорівнює дванадцяти.'
+      }
     }
   };

@@ -13,6 +13,7 @@ export const translations = {
         login: 'Login',
         logout: 'Logout',
         viewResults: 'View My Results',
+        confirmAndStart: 'Confirm & Start Quiz',
 
         // Home Page
         welcome: 'Welcome to the Five Love Languages Quiz',
@@ -33,6 +34,9 @@ export const translations = {
         scoreBreakdown: 'Score Breakdown',
         retakeQuiz: 'Retake Quiz',
         explanation: 'What this means for you:',
+        tiedLanguagesExplanation: 'You speak two languages! You scored equally in these two love languages, which means both forms of expressing love are equally important to you.',
+        secondaryLanguageNote: 'Your second highest love language is close to your primary one, which means both forms of expressing love are important to you.',
+        scoreMaximumNote: 'The highest possible score for a primary love language is twelve.',
 
         // Love Languages Descriptions
         words: 'Words of Affirmation',
@@ -65,6 +69,7 @@ export const translations = {
         // Errors
         answerAllQuestions: 'Please answer all questions before submitting.',
         loginFailed: 'Login failed. Please check your credentials.',
+        cannotChangeGender: 'Gender cannot be changed during the quiz.',
     },
     uk: {
         // Header
@@ -80,9 +85,10 @@ export const translations = {
         login: 'Увійти',
         logout: 'Вийти',
         viewResults: 'Переглянути мої результати',
+        confirmAndStart: 'Підтвердити і почати тест',
 
         // Home Page
-        welcome: "Ласкаво просимо до тесту П'ять мов кохання",
+        welcome: "Ласкаво просимо до тесту 'П'ять мов кохання'",
         introduction:
             'Відкрийте для себе свою основну мову кохання та навчіться краще спілкуватися з близькими людьми.',
         startQuiz: 'Почати тест',
@@ -95,16 +101,19 @@ export const translations = {
         submit: 'Відправити відповіді',
 
         // Results
-        results: 'Результати вашої мови кохання',
+        results: 'Результати вашого тесту на мови кохання',
         primaryLanguage: 'Ваша основна мова кохання:',
         scoreBreakdown: 'Розподіл балів',
         retakeQuiz: 'Пройти тест знову',
         explanation: 'Що це означає для вас:',
+        tiedLanguagesExplanation: 'Ви говорите двома мовами! Ви набрали однакову кількість очок у цих двох мовах кохання, що означає, що обидві форми вираження кохання однаково важливі для вас.',
+        secondaryLanguageNote: 'Ваша друга за кількістю очок мова близька до основної, це означає, що обидва види вираження кохання для вас є важливими.',
+        scoreMaximumNote: 'Найвищий рівень очок для основної мови кохання дорівнює дванадцяти.',
 
         // Love Languages Descriptions
         words: 'Слова підтвердження',
         wordsDesc:
-            'Ви цінуєте словесні підтвердження прихильності, включаючи часті "Я люблю тебе", компліменти, слова вдячності, словесне заохочення та часто цифрове спілкування, як текстові повідомлення та взаємодія в соціальних мережах.',
+            'Ви цінуєте словесні підтвердження прихильності, включаючи часті "Я люблю тебе", компліменти, слова вдячності, словесне заохочення та часто цифрове спілкування, таке як текстові повідомлення та взаємодія в соціальних мережах.',
 
         service: 'Акти служіння',
         serviceDesc:
@@ -134,5 +143,6 @@ export const translations = {
             'Будь ласка, дайте відповіді на всі питання перед поданням.',
         loginFailed:
             'Вхід не вдався. Будь ласка, перевірте свої облікові дані.',
+        cannotChangeGender: 'Стать не можна змінити під час тесту.',
     },
 };
