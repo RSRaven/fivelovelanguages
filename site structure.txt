@@ -1,0 +1,26 @@
+src/
+├── components/
+│   ├── Header.js
+│   ├── Menu.js
+│   ├── Question.js
+│   ├── Quiz.js
+│   ├── Results.js
+│   ├── Login.js
+│   └── LanguageSelector.js
+├── data/
+│   ├── questions.js
+│   ├── loveLanguageDescriptions.js
+│   └── translations.js
+├── contexts/
+│   ├── UserContext.js
+│   └── LanguageContext.js
+├── services/
+│   └── authService.js
+├── hooks/
+│   └── useLocalStorage.js
+├── pages/
+│   ├── HomePage.js
+│   ├── QuizPage.js
+│   └── ResultsPage.js
+├── App.js
+└── index.js
