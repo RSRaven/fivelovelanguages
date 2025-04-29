@@ -44,7 +44,6 @@
   color: #4a90e2;
 }
 
-.gender-selector select,
 .language-selector select {
   padding: 5px 10px;
   border-radius: 3px;
@@ -89,6 +88,10 @@
 }
 
 /* Quiz Styles */
+.quiz-page {
+  text-align: center; /* Center all content including gender selection */
+}
+
 .quiz-container {
   max-width: 800px;
   margin: 0 auto;
@@ -127,24 +130,33 @@
   border: 1px solid #ddd;
   border-radius: 5px;
   transition: background-color 0.2s;
+  cursor: pointer;
 }
 
 .option:hover {
   background-color: #f9f9f9;
 }
 
+.option.selected {
+  background-color: #e3f2fd;
+  border-color: #4a90e2;
+}
+
 .option-label {
   display: flex;
   align-items: center;
+  width: 100%;
   cursor: pointer;
 }
 
 .option-label input[type="radio"] {
   margin-right: 15px;
+  flex-shrink: 0;
 }
 
 .option-text {
   font-size: 16px;
+  flex-grow: 1;
 }
 
 .quiz-navigation {
@@ -370,6 +382,71 @@
   text-decoration: none;
 }
 
+.guest-menu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.menu-results-link {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* Gender Selection Container */
+.gender-selection-container {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 25px;
+  margin: 40px auto;
+  max-width: 500px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.gender-selection-container h3 {
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.gender-options {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 25px;
+}
+
+.gender-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.gender-option input[type="radio"] {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.confirm-gender-btn {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+  transition: background-color 0.3s;
+}
+
+.confirm-gender-btn:hover {
+  background-color: #357ab8;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
   .menu {
@@ -401,87 +478,5 @@
 
   .back-btn, .next-btn, .submit-btn {
     width: 100%;
-  }
-
-  /* Gender Selection Container */
-  .gender-selection-container {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 25px;
-    margin: 20px auto;
-    max-width: 500px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .gender-selection-container h3 {
-    color: #333;
-    margin-top: 0;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-
-  .gender-options {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-bottom: 25px;
-  }
-
-  .gender-option {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 18px;
-  }
-
-  .gender-option input[type="radio"] {
-    margin-right: 10px;
-    width: 20px;
-    height: 20px;
-  }
-
-  .confirm-gender-btn {
-    background-color: #4a90e2;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block;
-    margin: 0 auto;
-    transition: background-color 0.3s;
-  }
-
-  .confirm-gender-btn:hover {
-    background-color: #357ab8;
-  }
-
-  /* Additional styles for the updated Results component */
-
-  .tied-languages {
-    margin-bottom: 20px;
-  }
-
-  .result-explanation {
-    margin-top: 15px;
-    font-style: italic;
-    color: #555;
-    line-height: 1.5;
-  }
-
-  .secondary-language-note {
-    margin-top: 15px;
-    font-style: italic;
-    color: #555;
-    line-height: 1.5;
-  }
-
-  .score-maximum-note {
-    margin-top: 30px;
-    font-style: italic;
-    color: #555;
-    border-top: 1px solid #eee;
-    padding-top: 15px;
   }
 }

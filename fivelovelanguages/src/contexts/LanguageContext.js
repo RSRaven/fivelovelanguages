@@ -21,7 +21,7 @@ export const LanguageProvider = ({ children }) => {
 
   // Function to change language
   const changeLanguage = (lang) => {
-    if (lang === 'en' || lang === 'uk') {
+    if (lang === 'en' || lang === 'uk' || lang === 'ru') {
       setCurrentLanguage(lang);
     } else {
       console.error(`Unsupported language: ${lang}`);

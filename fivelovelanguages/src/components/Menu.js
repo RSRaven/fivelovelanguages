@@ -6,7 +6,7 @@ import LanguageSelector from './LanguageSelector';
 import Login from './Login';
 
 const Menu = () => {
-  const { user, logout } = useContext(UserContext);
+  const { user, logout, results } = useContext(UserContext);
   const { t } = useContext(LanguageContext);
 
   return (
@@ -25,7 +25,7 @@ const Menu = () => {
         {user ? (
           <div className="user-menu">
             <span className="user-email">{user.email}</span>
-            {user.results && (
+            {results && (
               <Link to="/results" className="results-link">
                 {t('viewResults')}
               </Link>
@@ -38,7 +38,14 @@ const Menu = () => {
             </button>
           </div>
         ) : (
-          <Login />
+          <div className="guest-menu">
+            {results && (
+              <Link to="/results" className="results-link menu-results-link">
+                {t('viewResults')}
+              </Link>
+            )}
+            <Login />
+          </div>
         )}
       </div>
     </div>

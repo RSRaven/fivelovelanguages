@@ -7,20 +7,24 @@ import Menu from '../components/Menu';
 
 const QuizPage = () => {
   const { t } = useContext(LanguageContext);
-  const { gender, answers, saveAnswer, calculateResults } = useContext(UserContext);
+  const { gender, setGender, answers, saveAnswer, calculateResults } = useContext(UserContext);
   const navigate = useNavigate();
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [showError, setShowError] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [showGenderSelector, setShowGenderSelector] = useState(true);
 
   // Load questions based on gender
   useEffect(() => {
+    // Only load questions after gender is selected
+    if (showGenderSelector) return;
+
+    setLoading(true);
     const loadQuestions = async () => {
       try {
         // In a real implementation, you might fetch from an API
-        // For now, we'll import directly
         const questionsModule = await import('../data/questions');
 
         // Filter questions by gender
@@ -40,7 +44,15 @@ const QuizPage = () => {
     };
 
     loadQuestions();
-  }, [gender]); // Only re-run if gender changes
+  }, [gender, showGenderSelector]); // Re-run when gender changes or gender selection is complete
+
+  const handleGenderChange = (e) => {
+    setGender(e.target.value);
+  };
+
+  const handleGenderConfirm = () => {
+    setShowGenderSelector(false);
+  };
 
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
@@ -79,6 +91,46 @@ const QuizPage = () => {
       setShowError(false);
     }
   };
+
+  // Show gender selection UI first
+  if (showGenderSelector) {
+    return (
+      <div className="quiz-page">
+        <Menu />
+        <div className="gender-selection-container">
+          <h3>{t('selectGender')}</h3>
+          <div className="gender-options">
+            <label className="gender-option">
+              <input
+                type="radio"
+                name="gender"
+                value="men"
+                checked={gender === 'men'}
+                onChange={handleGenderChange}
+              />
+              <span>{t('men')}</span>
+            </label>
+            <label className="gender-option">
+              <input
+                type="radio"
+                name="gender"
+                value="women"
+                checked={gender === 'women'}
+                onChange={handleGenderChange}
+              />
+              <span>{t('women')}</span>
+            </label>
+          </div>
+          <button
+            className="confirm-gender-btn"
+            onClick={handleGenderConfirm}
+          >
+            {t('confirmAndStart')}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return <div>Loading questions...</div>;

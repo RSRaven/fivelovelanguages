@@ -5,7 +5,7 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useLocalStorage('user', null);
-  const [gender, setGender] = useState('men'); // 'men' or 'women'
+  const [gender, setGender] = useState('men'); // Keep gender state
   const [answers, setAnswers] = useLocalStorage('answers', []);
   const [results, setResults] = useLocalStorage('results', null);
   const [quizInProgress, setQuizInProgress] = useState(false);

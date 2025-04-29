@@ -7,8 +7,8 @@ const Question = ({ question, selectedAnswer, onAnswerSelect }) => {
   // Get the question text in the current language
   const questionText = question?.text[currentLanguage] || '';
 
-  const handleChange = (e) => {
-    onAnswerSelect(parseInt(e.target.value, 10));
+  const handleOptionClick = (index) => {
+    onAnswerSelect(index);
   };
 
   if (!question) return null;
@@ -21,14 +21,18 @@ const Question = ({ question, selectedAnswer, onAnswerSelect }) => {
 
       <div className="options-container">
         {question.options.map((option, index) => (
-          <div className="option" key={index}>
+          <div
+            className={`option ${selectedAnswer === index ? 'selected' : ''}`}
+            key={index}
+            onClick={() => handleOptionClick(index)}
+          >
             <label className="option-label">
               <input
                 type="radio"
                 name={`question-${question.id}`}
                 value={index}
                 checked={selectedAnswer === index}
-                onChange={handleChange}
+                onChange={() => handleOptionClick(index)}
               />
               <span className="option-text">
                 {option.text[currentLanguage]}
